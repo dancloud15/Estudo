@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http:/java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+	<h:form>
+		<p:dataTable id="listagem_contasPagars"
+			value="#{cpBean.contas_pagars}" var="cp" paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="10,15,30">
+			
+			<p:column headerText="ID">
+				<h:outputText value="#{cp.id}"></h:outputText>
+			</p:column>
+			<p:column headerText="Descrição">
+				<h:outputText value="#{cp.descricao}"></h:outputText>
+			</p:column>
+			<p:column headerText="Valor">
+				<h:outputText value="#{cp.valor}"></h:outputText>
+			</p:column>
+			<p:column headerText="Data Vencimento">
+				<h:outputText value="#{cp.data_vencimento}" locale="pt" converter="converteData"></h:outputText>
+			</p:column>
+			
+			<p:column headerText="Fornecedor">
+				<h:outputText value="#{cp.fornecedor.nome}"></h:outputText>
+			</p:column>
+			<p:column headerText="Editar">
+				<p:commandButton value="EDITAR" action="editar_cp" actionListener="#{cpBean.selecionarContas_pagar}"></p:commandButton>
+			</p:column>
+			<p:column headerText="Apagar">
+				<p:commandButton value="APAGAR" actionListener="#{cpBean.deleteContasPagar}" update="listagem_contasPagars">
+					<p:confirm header="Exclusão de Fornecedor" message="Deseja excluir essa entrada?" icon="ui-icon-alert"></p:confirm>
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="clip">
+			<p:commandButton value="SIM" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+			<p:commandButton value="NAO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+		</p:confirmDialog>
+		
+		
+		
+		
+	</h:form>
+	<br />
+	<p:commandButton value="CADASTRAR CONTAS A PAGAR"
+		actionListener="#{cpBean.novoContasPagar}"
+		action="novo_cp?faces-redirect=true"></p:commandButton>
+
+
+</h:body>
+</html>
